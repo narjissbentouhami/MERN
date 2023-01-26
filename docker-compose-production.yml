@@ -1,0 +1,26 @@
+version: "3"
+services: 
+  react-app:
+    image: react-app-production:local
+    restart: unless-stopped
+    stdin_open: true
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - mern-app
+  api-server:
+    image: api-server
+    restart: unless-stopped
+    env_file: ./server/app/config/local.env
+    ports:
+      - "8080:8080"
+    networks:
+      - mern-app
+networks:
+  mern-app:
+      driver: bridge
+volumes:
+  mongo-data:
+      driver: local
+
